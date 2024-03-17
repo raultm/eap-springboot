@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# SETUP
+</div>
+
+<aside class="notes"><p>Antes de repasar sintaxis de Java vamos a ver como, sin tener ni idea, podemos empezar a tener el proyecto y funcionando consultando desde navegador.</p>
+<!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div><!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# VirtualBox
+</div>
+
+<aside class="notes"><p>alguien no lo ha usado nunca?</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Ubuntu 23.04 
+## Fresh install
+</div>
+
+<aside class="notes"><p>¿cómo os llevais con linux?</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<p>imagen de ubuntu 23.04 recien preparada, nada instalado de forma adicional</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<p>usuario/contraseña: eap/eap</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# JAVA
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh
+java -version
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><p>comprobamos version, como no está instalado nos propone alternativas</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh
+sudo apt install openjdk-17-jre-headless
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><p>instalamos con permisos de administrador</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh
+java -version
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><p>comprobamos que es la que acabamos de instalar</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# MAVEN
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><p>gestor de dependencias de java</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh
+mvn -version
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh 
+sudo install maven
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh
+mvn -version
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Visual Studio CODE
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh
+code
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh
+sudo snap install code
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Extensiones 
+## VS Code
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Java extension pack
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Springboot
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# vscode-icons
+
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# PREPARADOS
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><p>ya tenemos todos lo necesario para desarrollar nuestro proyecto!</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Spring Initializr
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+## Web
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+https://start.spring.io/
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- Maven
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Java
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Version
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Grupo (es.acaex)
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Nombre (Aplicacion)
+- &shy;<!-- .element: class="fragment" data-fragment-index="5" -->Descripcion
+- &shy;<!-- .element: class="fragment" data-fragment-index="6" -->Dependencias
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Dependencias
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- Spring Boot DevTools
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Lombok
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Spring Web
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->H2 Database
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><p><a href="https://www.baeldung.com/spring-boot-devtools">https://www.baeldung.com/spring-boot-devtools</a></p>
+<ul>
+<li>Property defaults</li>
+<li>Automatic Restart</li>
+<li>Live Reload</li>
+<li>Global settings</li>
+<li>Remote applications<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></li>
+</ul>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Generate
+
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Spring Initializr
+## VS Code
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Mismos Pasos
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><h3 id="qué-tiene-el-proyecto-nada-mas-arrancar">Qué tiene el proyecto nada mas arrancar?</h3>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<ul>
+<li>pom.xml (Info del proyecto, dependencias y tema de building)</li>
+<li>mvnw (wrapper por si no tenemos maven en el entorno)</li>
+<li>src - Codigo Aplicacion<ul>
+<li>main<ul>
+<li>Application</li>
+<li>resource<ul>
+<li>properties</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>tests</li>
+</ul>
+</li>
+</ul>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```sh
+mvn spring-boot:run
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><p>pero si nos vamos al navegador no funciona nada porque no hemos definido ningun endpoint</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Controlador
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div>
+
+<aside class="notes"><!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<p>¿Conoceis el patrn MVC? ¿qué es el controller?
+Crear carpeta controllers y un controller (intermediario entre el exterior y la aplicación)</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<p>Recordar aquí, que antes de entrar en materia más a fondo veremos un pequeño repaso de Java
+Crear un método que devuelva una string de hello World </p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+@RestController
+public class HomeController {
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+	@GetMapping
+	public String hello(){
+		return "Hola Mundo!";
+	}
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+}
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+```
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+https://localhost:8080
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+</div></script></section><section  data-markdown><script type="text/template">
+
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" -->
+
+</script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealChalkboard, 
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
