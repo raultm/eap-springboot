@@ -257,7 +257,7 @@ public interface MembersRepository extends JpaRepository<Member, Long>{
 @RequestMapping("members")
 public class MembersController {
     
-    @Autowired MemberRepository repository;
+    @Autowired MembersRepository repository;
 
     @GetMapping
     public List<Member> findAll() {
@@ -369,8 +369,8 @@ public class ItemsController {
     @Autowired ItemsRepository repository;
     
     @PostMapping
-    public ResponseEntity<Item> save(@RequestBody Item item) { 
-        return saveItemService.response(item);
+    public Item save(@RequestBody Item item) { 
+        return repository.save(item);
     }
     
     @GetMapping 
