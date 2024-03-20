@@ -172,15 +172,17 @@ classDiagram
 
 # Modelo
 
-```java
+```java [1-21 | 12-15]
 @Entity(name="copies")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Copy {
     
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
@@ -193,6 +195,28 @@ public class Copy {
 
     @Column(name="reserved_by")
     private String reservedBy;
+}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java [1-17 | 14-16]
+@Entity(name = "items")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Item {
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    /* Otros atributos */
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Copy> copies;
 }
 ```
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
@@ -275,8 +299,11 @@ public class Loan {
 
     private Long memberId;
     private Long copyId;
+    @Column(name="started_at")
     private Date startedAt;
+    @Column(name="expired_at")
     private Date expiredAt;
+    @Column(name="returned_at")
     private Date returnedAt;
 }
 
@@ -351,8 +378,7 @@ public class LoansController {
 
 
 ```
-</div></script></section><section  data-markdown><script type="text/template">
-</script></section></div>
+</div></script></section></div>
     </div>
 
     <script src="dist/reveal.js"></script>
