@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/beige.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.portada.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Logging
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ¿Por qué es importante el Logging?
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Monitoreo y Diagnóstico:** Ayuda a entender qué ocurre en tu aplicación.
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->**Depuración:** Facilita la identificación de errores y problemas de rendimiento.
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->**Auditoría y Seguridad:** Registro de accesos y actividades importantes.
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->**Soporte:** Mejora la capacidad de soporte y mantenimiento.
+</div>
+
+<aside class="notes"><p>El logging es crucial para mantener, monitorear y mejorar nuestras aplicaciones en producción.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Uso de Lombok con @Slf4j
+
+### ¿Qué es Lombok?
+
+- **Lombok**: Biblioteca Java que reduce el código boilerplate.
+- **`@Slf4j`**: Anotación de Lombok para usar un logger de forma simple.
+
+```java
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class ExampleService {
+
+    public void doSomething() {
+        log.info("Ejecutando doSomething()");
+        log.error("Un error ha ocurrido");
+    }
+}
+```
+</div>
+
+<aside class="notes"><p>La anotación @Slf4j proporciona automáticamente un objeto log listo para usar. Ahorra tiempo y reduce código repetitivo para inicializar loggers.</p>
+<h2 id="simple-logging-facade-for-java-slf4j">Simple Logging Facade for Java (SLF4J)</h2>
+<p><a href="https://www.slf4j.org/">https://www.slf4j.org/</a></p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Configuración de Logback
+
+### ¿Qué es Logback?
+
+- **Logback** es el framework de logging por defecto en Spring Boot.
+- Soporta configuraciones avanzadas y un mejor rendimiento que log4j.
+- Permite configuraciones mediante XML o Groovy.
+</div>
+
+<aside class="notes"><p>Logback es potente y flexible, con muchas características que cubren la mayoría de las necesidades de logging.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Configuración Básica de Logback
+
+### Archivo `logback.xml`
+
+Ubicado en `src/main/resources`:
+
+```xml
+<configuration>
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="info">
+    <appender-ref ref="console" ></appender>
+  </root>
+</configuration>
+```
+</div>
+
+<aside class="notes"><p>Este archivo configura un appender de consola simple y define el nivel de logging como <code>INFO</code>.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Entendiendo los Niveles de Log
+
+- **TRACE**: Información detallada (trazabilidad completa).
+- **DEBUG**: Información de debugging.
+- **INFO**: Eventos informativos.
+- **WARN**: Situaciones que no son errores pero requieren atención.
+- **ERROR**: Eventos de error que requieren acción.
+</div>
+
+<aside class="notes"><p>Cada nivel de logging sirve para un propósito diferente; usarlos adecuadamente ayuda a filtrar la información que necesitas.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Configuración Avanzada de Logback
+
+### Archivo `logback.xml` con Múltiples Appenders
+
+```xml
+<configuration>
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="file" class="ch.qos.logback.core.FileAppender">
+    <file>logs/app.log</file>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="console" ></appender>
+    <appender-ref ref="file" ></appender>
+  </root>
+</configuration>
+
+```
+</div>
+
+<aside class="notes"><p>Este ejemplo muestra cómo configurar múltiples appenders, para consola y archivo, y establecer diferentes niveles de logging.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Ejercicio Práctico
+
+1. Añadir `@Slf4j` a una clase de servicio.
+2. Implementar logs en diferentes niveles (`TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`).
+3. Configurar un archivo `logback.xml` para enviar logs tanto a consola como a archivo.
+4. Ejecutar la aplicación y observar cómo se registran los eventos.
+</div>
+
+<aside class="notes"><p>Este ejercicio te ayudará a familiarizarte con las configuraciones de logging en Spring Boot y cómo se usan en diferentes situaciones.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Demo de Logging
+
+- Mostrar ejemplos de logging en consola y archivo.
+- Cambiar los niveles de log en `logback.xml` y ver los resultados.
+- Añadir excepciones simuladas y ver cómo se registran.
+</div>
+
+<aside class="notes"><p>Vamos a hacer una demostración en vivo de cómo funciona el logging y cómo cambiar configuraciones sobre la marcha.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Mejores Prácticas de Logging
+
+1. **Usar niveles apropiados:** No todo es `ERROR`.
+2. **Evitar logs excesivos:** Afecta al rendimiento y genera ruido.
+3. **No incluir datos sensibles:** Evitar credenciales o información personal.
+4. **Estructurar logs de forma legible:** Patrones de formato consistentes.
+</div>
+
+<aside class="notes"><p>Mantener los logs claros, útiles y seguros es esencial para una buena gestión de la aplicación.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Conclusión
+
+- **Lombok** y `@Slf4j` facilitan la creación de logs.
+- **Logback** ofrece flexibilidad y potencia para configurar el logging.
+- Aplicar mejores prácticas para mantener los logs eficientes y útiles.
+</div>
+
+<aside class="notes"><p>El logging es una herramienta esencial para cualquier aplicación seria. Utilicémosla sabiamente para mejorar el desarrollo, mantenimiento y soporte de nuestras aplicaciones.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# ¿Preguntas o comentarios?
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealChalkboard, 
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":false,"progress":false,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
