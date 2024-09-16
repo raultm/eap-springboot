@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/beige.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.portada.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Flyway
+
+## Versionado de la Base de Datos
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# ¿CVS en BD?
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**Consistencia**
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->**Rastreabilidad**
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->**Colaboración**
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->**Despliegue Automatizado**
+</div>
+
+<aside class="notes"><ul>
+<li><strong>Consistencia</strong>: Asegura que todos los entornos (desarrollo, pruebas, producción) estén alineados.</li>
+<li><strong>Rastreabilidad</strong>: Permite saber qué cambios se han aplicado y cuándo.</li>
+<li><strong>Colaboración</strong>: Facilita el trabajo en equipo al compartir una historia clara de cambios.</li>
+<li><strong>Despliegue Automatizado</strong>: Mejora la integración y despliegue continuo.
+Gestionar versiones de la base de datos es fundamental para mantener la consistencia y estabilidad del software, especialmente en entornos colaborativos.</li>
+</ul>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ¿Qué es Flyway?
+
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Herramienta de migración de base de datos que gestiona versiones de esquemas.
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Permite aplicar, controlar y revertir cambios de manera estructurada.
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Integración sencilla con Spring Boot y otros frameworks.
+</div>
+
+<aside class="notes"><p>Flyway es una solución robusta y fácil de usar para la gestión de versiones de bases de datos, diseñada para integrarse perfectamente en el flujo de trabajo de desarrollo.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Integración de Flyway en Spring Boot
+
+1. Agregar la dependencia de Flyway al proyecto (ejemplo: Maven o Gradle).
+2. Configurar las propiedades de conexión en el archivo `application.properties` de Spring Boot.
+3. Crear una carpeta de migraciones para los scripts SQL, generalmente `src/main/resources/db/migration`.
+</div>
+
+<aside class="notes"><p>Integrar Flyway en un proyecto de Spring Boot es simple y directo. Solo necesitas configurar las dependencias y propiedades adecuadas.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Creando Migraciones con Flyway
+
+- Los archivos de migración deben ser nombrados con un prefijo de versión, como `V1__inicial.sql`, `V2__añadir_tabla.sql`.
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Alternativamente, se pueden usar versiones semánticas: `V1.0.0__inicial.sql`, `V1.1.0__añadir_columna.sql`, `V2.0.0__cambios_importantes.sql`.
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Estos archivos deben colocarse en la carpeta `db/migration`.
+</div>
+
+<aside class="notes"><p>Flyway utiliza el nombre de los archivos para determinar el orden de ejecución. El formato puede ser secuencial (V1, V2) o semántico (V1.0.0, V1.1.5).</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Ejecución de Migraciones
+
+- Flyway detecta automáticamente los scripts en la carpeta de migraciones y los ejecuta en el orden correcto.
+- Se registra cada migración en una tabla interna (`flyway_schema_history`), asegurando que cada script se ejecute una sola vez.
+</div>
+
+<aside class="notes"><p>Flyway garantiza que las migraciones se apliquen de manera ordenada y rastreable, manteniendo un historial detallado de los cambios.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Ejercicio Práctico: Migración de Base de Datos con Flyway
+
+1. Crear una nueva base de datos para el proyecto.
+2. Agregar Flyway al proyecto y configurar las propiedades de conexión.
+3. Crear scripts de migración en la carpeta `db/migration`.
+4. Ejecutar la aplicación y verificar que Flyway aplique las migraciones correctamente.
+</div>
+
+<aside class="notes"><p>Este ejercicio práctico te permitirá experimentar cómo Flyway facilita la gestión de cambios en la base de datos, asegurando que todas las versiones sean consistentes.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Verificando la Migración
+
+- Comprobar la tabla `flyway_schema_history` para ver qué migraciones han sido aplicadas.
+- Verificar la existencia de tablas y cambios definidos en los scripts de migración.
+- Revisar los logs de Spring Boot para confirmar que Flyway ha ejecutado los scripts.
+</div>
+
+<aside class="notes"><p>La verificación es un paso clave para asegurar que las migraciones se hayan aplicado correctamente y que no haya errores.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Revirtiendo Migraciones
+
+- Flyway no soporta la reversión automática de migraciones.
+- Es necesario crear scripts de reversión manualmente si se requieren cambios.
+</div>
+
+<aside class="notes"><p>Aunque Flyway no permite la reversión automática, podemos manejar este proceso manualmente creando scripts específicos para deshacer los cambios.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Mejores Prácticas con Flyway
+
+1. Nombrar archivos de manera clara y consistente: `V1__`, `V2__` o utilizando versiones semánticas `V1.0.0__`.
+2. Crear scripts pequeños y específicos para cambios concretos.
+3. No modificar scripts aplicados, ya que Flyway detecta cambios y puede generar errores.
+4. Probar siempre las migraciones en entornos de desarrollo y prueba antes de aplicarlas en producción.
+</div>
+
+<aside class="notes"><p>Seguir estas prácticas hará que Flyway sea una herramienta efectiva para gestionar versiones de la base de datos, evitando problemas y manteniendo la claridad del historial de cambios.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Conclusión
+
+- Flyway es esencial para la gestión de versiones de la base de datos, facilitando el trabajo en equipo y automatizando despliegues.
+- Usar versiones semánticas o secuenciales permite un control detallado de las migraciones.
+- Seguir las mejores prácticas garantizará un uso efectivo y seguro.
+</div>
+
+<aside class="notes"><p>Flyway aporta una gran ventaja en la administración de bases de datos, ayudando a mantener la consistencia y la calidad del software. 
+¿Preguntas o comentarios?</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealChalkboard, 
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":false,"progress":false,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
