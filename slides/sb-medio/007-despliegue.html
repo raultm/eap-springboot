@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/beige.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.portada.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Despliegue Continuo 
+
+## (CI/CD)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## ¿Qué es CI/CD?
+
+- **Integración Continua (CI)**: Automatiza el proceso de integración de código desde múltiples desarrolladores en un proyecto compartido.
+- **Despliegue Continuo (CD)**: Automatiza la entrega de software a entornos de producción de manera eficiente y sin intervención manual.
+</div>
+
+<aside class="notes"><p>CI/CD es un conjunto de prácticas que permite un flujo de desarrollo más eficiente, con la capacidad de detectar y resolver errores rápidamente, asegurando que el código siempre esté listo para producción.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Ventajas de CI/CD
+
+- **Entrega más rápida**: Automatización del proceso de integración y despliegue.
+- **Menos errores**: Pruebas automáticas que identifican fallos temprano.
+- **Mejor colaboración**: Equipos sincronizados trabajando sobre una base de código actualizada.
+- **Retroalimentación continua**: Detección temprana de problemas con feedback rápido.
+</div>
+
+<aside class="notes"><p>CI/CD permite a los equipos trabajar de manera más ágil, ofreciendo mejoras constantes al código y productos sin largos ciclos de despliegue.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Flujo CI/CD en Proyectos Java con Maven
+
+1. **Commit/Pull Request**: Los desarrolladores hacen commits y abren pull requests.
+2. **Pipeline de CI**: GitLab ejecuta automáticamente un pipeline de integración continua, compilando el código y corriendo las pruebas.
+3. **Despliegue Automático**: Si las pruebas pasan, el código puede desplegarse automáticamente en los entornos de pruebas o producción.
+</div>
+
+<aside class="notes"><p>El pipeline de CI/CD está diseñado para garantizar que todo el código sea probado y aprobado antes de integrarse en la rama principal y desplegarse en producción.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Configuración Básica de GitLab CI/CD
+
+### `.gitlab-ci.yml`
+
+```yaml
+stages:
+  - build
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - mvn clean install
+
+test-job:
+  stage: test
+  script:
+    - mvn test
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Desplegando..."
+  only:
+    - main
+```
+</div>
+
+<aside class="notes"><p>Este es un archivo básico de configuración de GitLab CI/CD que incluye tres etapas: build, test y deploy. Cada etapa tiene su propio job y define cómo interactúa con el proyecto Maven.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Integración Continua (CI) con Maven
+
+### Jobs en GitLab CI
+
+1. **Compilación** (`build`):
+    - Ejecuta `mvn clean install` para compilar el código y generar artefactos.
+2. **Pruebas** (`test`):
+    - Corre pruebas unitarias usando `mvn test`.
+3. **Despliegue** (`deploy`):
+    - Despliega el artefacto compilado a un servidor o registro, ejecutado solo en la rama principal.
+</div>
+
+<aside class="notes"><p>En un proyecto Java/Maven, estas etapas permiten validar que el código esté funcionando correctamente antes de ser desplegado.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Despliegue Continuo (CD) en GitLab
+
+- **Despliegue a Entornos de Pruebas**:
+    - Se puede configurar el pipeline para desplegar automáticamente en un entorno de pruebas después de las pruebas.
+- **Despliegue a Producción**:
+    - Solo se ejecuta el despliegue en producción cuando se trabaja en la rama principal (`main`) y cuando todas las pruebas han pasado.
+
+```yaml
+deploy-job:
+  stage: deploy
+  script:
+    - scp target/my-app.jar user@server:/path/to/deploy/
+  only:
+    - main
+
+```
+</div>
+
+<aside class="notes"><p>El ejemplo muestra cómo desplegar un archivo JAR a un servidor remoto usando <code>scp</code>, asegurando que solo ocurra en la rama principal.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Ejercicio Práctico: Configurar un Pipeline CI/CD en GitLab
+
+1. Crear el archivo `.gitlab-ci.yml` en la raíz de tu proyecto Maven.
+2. Definir las etapas de build, test y deploy.
+3. Realizar un commit y observar cómo GitLab CI ejecuta el pipeline.
+4. Configurar las credenciales necesarias para el despliegue a un servidor.
+</div>
+
+<aside class="notes"><p>Este ejercicio te permitirá implementar un pipeline de CI/CD básico en un proyecto Java/Maven, manejado a través de GitLab.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Deploy Manual vs Automático
+
+### Despliegue Manual
+
+- **Pros**:
+    - Mayor control sobre cuándo y dónde se despliega el código.
+- **Contras**:
+    - Más lento y propenso a errores humanos.
+
+### Despliegue Automático
+
+- **Pros**:
+    - Despliegue más rápido y sin intervención.
+    - Minimiza errores manuales.
+- **Contras**:
+    - Requiere más configuración inicial.
+</div>
+
+<aside class="notes"><p>Ambos métodos tienen sus ventajas, pero el despliegue automático facilita un flujo de trabajo ágil y eficiente en entornos de producción.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Mejores Prácticas para CI/CD
+
+1. **Commits Pequeños y Frecuentes**: Facilita la integración y minimiza conflictos.
+2. **Pruebas Automáticas**: Ejecutar siempre pruebas unitarias y de integración antes de desplegar.
+3. **Seguridad en el Despliegue**: Usar variables de entorno para manejar credenciales sensibles.
+4. **Monitoreo**: Implementar monitoreo continuo después del despliegue.
+</div>
+
+<aside class="notes"><p>Seguir estas prácticas garantiza que el pipeline de CI/CD sea eficiente, seguro y fácil de mantener, reduciendo riesgos en producción.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Conclusión
+
+- CI/CD mejora el ciclo de vida del software, desde el desarrollo hasta el despliegue.
+- GitLab CI/CD integrado con Maven proporciona una solución automatizada y flexible.
+- Seguir mejores prácticas asegura que los despliegues sean rápidos y seguros.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# ¿Preguntas o comentarios?
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealChalkboard, 
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{ icon: '<i class="fa fa-pen-square"></i>',
+				title: 'Toggle chalkboard (B)',
+				action: 'RevealChalkboard.toggleChalkboard();'
+				},
+				{ icon: '<i class="fa fa-pen"></i>',
+				title: 'Toggle notes canvas (C)',
+				action: 'RevealChalkboard.toggleNotesCanvas();'
+				},
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":false,"progress":false,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
