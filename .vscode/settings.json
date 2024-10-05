@@ -36,5 +36,8 @@
                 }
             ]
         }
+    ],
+    "conventionalCommits.scopes": [
+        "springboot-medio"
     ]
 }
