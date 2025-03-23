@@ -1,5 +1,4 @@
 {
-    "editor.formatOnSave": true,
     "files.autoSave": "onFocusChange",
     "[javascript]": {
         "editor.formatOnSave": false
@@ -39,5 +38,6 @@
     ],
     "conventionalCommits.scopes": [
         "springboot-medio"
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }
