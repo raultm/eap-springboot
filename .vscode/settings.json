@@ -37,7 +37,8 @@
         }
     ],
     "conventionalCommits.scopes": [
-        "springboot-medio"
+        "springboot-medio",
+        "springboot-basico"
     ],
     "liveServer.settings.port": 5501
 }

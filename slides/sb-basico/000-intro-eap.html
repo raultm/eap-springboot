@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Introduccion</title>
+    <title></title>
     <link rel="stylesheet" href="dist/reveal.css" />
     <link rel="stylesheet" href="dist/theme/beige.css" id="theme" />
     <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
@@ -85,18 +85,26 @@
   </head>
   <body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.eap.portada.png" -->
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.portada.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Backend
 ## Springboot
-</div><aside class="notes"><p>En grande Backend, y en chiquitito spring, eso marca el objetivo del curso. Vamos a trabajar conceptos de backend apoyándonos en este caso spring</p>
+</div>
+
+<aside class="notes"><p>Curso complementario a Frontend(React de Luismi y Centeno)</p>
+<p>¿alguien ha realizado el curso de front? ¿a alguien le han comentado sobre este, ya es la tercera edicion?</p>
+<ul>
+<li>Backend, en grande</li>
+<li>Springboot en chiquitito</li>
+</ul>
+<p>eso marca el objetivo del curso. Vamos a trabajar conceptos de backend apoyándonos en este caso spring</p>
 </aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Curso
 
-- Backend Principios 
+- Backend principios
 - Springboot (Resumen Java)
 - Visual Studio Code (VS Code)
 - Desarrollo Proyectos (Visión Propia)
@@ -106,7 +114,7 @@
 
 <aside class="notes"><p>Me gusta mucho buscar asociaciones de conceptos complejos con cosas del mundo real, casi siempre que no puedo encontrar el ejemplo concreto muchas veces es porque no entiendo el concepto realmente.</p>
 <p>Si veis algun concepto complejo y no he dado ejemplo asociado preguntadlo e intentamos sacarlo</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Raul Tierno
@@ -121,93 +129,158 @@
 </div>
 
 <aside class="notes"><p>Ahora tengo perfil de desarrollador en JEX, soy de Almendralejo, terminé la carrera en Sevilla en 2009 y desde entonces trabajando con máquinas.</p>
-<p>He tenido diversos perfiles Desarrollador/Sysadmin
-PHP, Cake, android, Java, javascript, Laravel, linux, macos,</p>
-<p>Profe
-Android, Laravel y ahora parece que Java</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<p>He tenido diversos perfiles Desarrollador/Sysadmin PHP, Cake, android, Java, javascript, Laravel, linux, macos,</p>
+<p>Profe Android, Laravel, Java</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Desarrollo de Proyectos
+
+## Ciclo de Vida
 </div>
 
-<aside class="notes"><p>Cuando empezáis vuestro proyecto nuevo existe mucha ilusión, hay esfuerzo dedicado a entender el problema y buscar soluciones. Realizas el proyecto de la mejor manera que sabes.</p>
-<p>Lo entregas al cliente para que lo pruebes, resuelves los bugs que puedas encontrar y lo dejas correr libre. </p>
+<aside class="notes"><p>Esta es una historia que todos hemos vivido, vamos a echar el freno y ver si coinciden nuestras experiencias</p>
+<p>Cuando empezáis vuestro proyecto nuevo existe mucha ilusión, hay esfuerzo dedicado a entender el problema y buscar soluciones. Realizas el proyecto de la mejor manera que sabes.</p>
+<p>Importante contextualizar. No eres el mismo profesional al salir de la carrera que cuando llevas 20 años en el negocio</p>
 <p>Satisfacción.</p>
 <p>ref: Sandi Metz - Go ahead, make a mess</p>
 <p><a href="https://speakerdeck.com/skmetz/go-ahead-make-a-mess?slide=2">https://speakerdeck.com/skmetz/go-ahead-make-a-mess?slide=2</a></p>
 <p><a href="https://youtu.be/mpA2F1In41w?si=09SjrhhtF_vQ2MlM&amp;t=33">https://youtu.be/mpA2F1In41w?si=09SjrhhtF_vQ2MlM&amp;t=33</a>
 You wrote the mos amazing application and the somebody asks for a change</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/customers.happy.jpg" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<img src="../Adjuntos/metz_satisfaction_01_beta.png" alt="" style="object-fit: scale-down">
+
 </div>
 
-<aside class="notes"><p>Si todo funciona como es debido el proyecto tiene éxito y ese éxito viene acompañado, como no, por peticiones de nuevas funcionalidades.</p>
-<p>Desarrollas la funcionalidad tocando código aquí y allá, la compruebas y la despliegas.</p>
+<aside class="notes"><p>Lo entregas al cliente para que lo pruebes, resuelves los bugs que puedas encontrar y lo dejas correr libre.</p>
+<p>Aqui se ve una entrega típica XD</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Adjuntos/metz_satisfaction_01_beta.png" alt="" style="object-fit: scale-down">
+</div>
+
+<aside class="notes"><p>Satisfacción</p>
+<p>Has hecho el mejor proyecto posible con todos los requerimientos a la perfección. Pues ahora empieza lo nuevo, vienenlos primeros cambios...</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/office.people.jpg" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div>
+
+<aside class="notes"><p>Desarrollas la funcionalidad tocando código aquí y allá, la compruebas y la despliegas.</p>
 <p>Los cambios siguen viniendo en el barullo del día a día, a veces puedes dedicar más tiempo y otras, pues menos.</p>
 <p>Te piden funcionalidades que no entraban en tus diseños de la aplicación, además ese día tiene más jaleo y realizas un desarrollo para salir del paso.</p>
-<p>Este proceso iterativo se va repitiendo hasta que abres el proyecto un día y aquella aplicación que habías realizado con tanto cariño en dejarla bonita y que te daba una satisfacción resulta que se ha convertido en uno de tus mayores odios. Odias el lenguaje elegido, odias el framework, odias el proyecto, odias tu trabajo y crees que lo mejor es dejarlo todo irte a trabajar un huerto</p>
-</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.satisfaccion.jpeg" -->
+<p>Este proceso iterativo se va repitiendo hasta que abres el proyecto un día y aquella aplicación que habías realizado con tanto cariño en dejarla bonita y que te daba una satisfacción resulta que se ha convertido en uno de tus mayores molestias.</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-<img src="../Adjuntos/metz_satisfaction_02_full_cycle.png" alt="" style="object-fit: scale-down">
+<img src="Adjuntos/metz_satisfaction_02_full_cycle.png" alt="" style="object-fit: scale-down">
 </div>
 
 <aside class="notes"><p>No estás solo</p>
 <p>El diseño que te has hecho es bueno pero a medida que los cambios no pensados vienen, empiezan a emerger problemas que no habías tenido en cuenta porque, básicamente, no existían</p>
 <p>Pero es que además somos humano y si no afrontamos el problema lo que pasa es que volvemos a repetir la misma historia</p>
-</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<img src="../Adjuntos/metz_satisfaction_03_two_cycles.png" alt="" style="object-fit: scale-down">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+<img src="Adjuntos/metz_satisfaction_03_two_cycles.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<img src="../Adjuntos/metz_satisfaction_04_three_cycles.png" alt="" style="object-fit: scale-down">
+<img src="Adjuntos/metz_satisfaction_04_three_cycles.png" alt="" style="object-fit: scale-down">
 </div>
 
-<aside class="notes"><p>Si consigues detectar y separar las cosas estables de las inestables y gestionas correctamente esas dependencias mejoraras mucho la gestión de la satisfacción.</p>
+<aside class="notes"><p>Entramos en un circulo vicioso del que es dificil salir</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/girl.crying.jpg" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div>
+
+<aside class="notes"><p>despues de llorar...</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-transition="none" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### 🤬 lenguaje elegido
+</div>
+
+<aside class="notes"><p>odias lenguage</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-transition="none" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 😤 framework
+</div>
+
+<aside class="notes"><p>odias framework</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-transition="none" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## 😠 proyecto
+</div>
+
+<aside class="notes"><p>odias proyecto</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-transition="none" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# 😡 trabajo
+</div>
+
+<aside class="notes"><p>odias tu trabajo</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-transition="none" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# 🧑‍🌾🚜 
+## 🥔🥕
+</div>
+
+<aside class="notes"><p>lo quieres dejar todo e irte a trabajar al huerto feliz</p>
+<p>los emojis los he buscado, no se los he pedido a la AI</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/relax.jpg" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div>
+
+<aside class="notes"><p>En esa situación lo mejor es parar. </p>
+<p>Pensar</p>
+<p>Hay que detectar y separar las cosas estables de las inestables y gestionanado correctamente esas dependencias mejoraras mucho la gestión de la satisfacción.</p>
 <p>Para conseguir eso necesitas herramientas.</p>
 <p>Nuestro objetivo es que en un proyecto la satisfacción venga a ser algo parecido a...</p>
-</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/giphy.blame.algorithm.gif" -->
+<p>Foto de <a href="https://unsplash.com/es/@aaronburden?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Aaron Burden</a> en <a href="https://unsplash.com/es/fotos/dos-sillas-de-playa-azules-cerca-del-cuerpo-de-agua-cEukkv42O40?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<img src="Adjuntos/metz_satisfaction_05_expected.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/arrow.happiness.jpg" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 
 </div>
 
-<aside class="notes"><p>bg de blame</p>
-</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-<img src="../Adjuntos/metz_satisfaction_05_expected.png" alt="" style="object-fit: scale-down">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.eap.png" -->
-<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
-
-Bases para la 
-
-# Orientación a Objetos
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.eap.png" -->
+<aside class="notes"><p>Bases para la </p>
+<h1 id="orientación-a-objetos">Orientación a Objetos</h1>
+<p>Os voy a ofrecer las herramientas que he encontrado yo para el desarrollo y mas concreamente para Proyectos que usan orientacion a objetos</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Diseño
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/diseño.webp" -->
+</div>
+
+<aside class="notes"><p>Cuando hablamos de diseño ¿que se nos viene a la mente?</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/diseño.webp" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 
 </div>
 
 <aside class="notes"><p>bg de diseño</p>
-<p>Esto es lo que se nos viene a la mente</p>
-</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+<p>A mi algo así</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/meme_muromalhecho.jpg" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<img src="../Adjuntos/meme_muromalhecho.jpg" alt="" style="width: 800px; object-fit: fill">
+
 </div>
 
 <aside class="notes"><p>pero tambien puede ser esto</p>
@@ -228,12 +301,10 @@ Diseño en wikipedia.</p>
 <p>Etimologia de designio o lo que esta por venir
 <a href="https://es.wikipedia.org/wiki/Dise%C3%B1o">https://es.wikipedia.org/wiki/Dise%C3%B1o</a></p>
 <p>en desarrollo diferentes niveles de diseño que podemos comparar con la Arquitectura</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Diseño
-
-
 
 | Arquitectura | Software         |
 | -----        | ----             |
@@ -243,7 +314,7 @@ Diseño en wikipedia.</p>
 </div>
 
 <aside class="notes"><p>Un Sistema Complejo es un conjunto de aplicaciones que interactuan entre ellas</p>
-</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Objetivos
@@ -253,28 +324,36 @@ facilitar lo que quieres que se haga
 dificultar lo que no quieres que se haga
 </div>
 
+<aside class="notes"><p>¿como lo podemos ver facilmente con un ejemplo?</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/testing.dormitorio.jpg" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+
+</div>
+
 <aside class="notes"><p>En una habitación cuando el arquitecto pone los enchufes en unos sitios concretos ya está decidiendo donde debes poner la cama, la tele, las mesitas de noche.</p>
 <p>¿Tú puedes ponerlo donde quieras?
 Sí, pero te obliga a usar alargadores o abrir rozas para cambiar la configuración</p>
 <p>En el patrón MVC sabes donde van los controladores o lo modelos y lo que hacen, una decisión tomada que es coherente y es fácil mantener la consistencia</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Esfuerzo
 
 **¿Merece la pena?**
 
-<img src="../Adjuntos/fowler_designStaminaGraph.gif" alt="" style="object-fit: scale-down">
+<img src="Adjuntos/fowler_designStaminaGraph.gif" alt="" style="object-fit: scale-down">
 </div>
 
-<aside class="notes"><p>Pero además no es lo mismo hacer los diseños para la caseta del perro, que nos da igual que se caiga dentro de 3 años o el diseño de un edificion de 100 plantas en el que queremos ciertos estándares de seguridad, como mínimo que no se caiga mañana</p><p>Pues depende.  Si la actividad a resolver va tener que mantenerse en el tiempo sobre cambios la experiencia nos dice que si.</p>
+<aside class="notes"><p>No es lo mismo caseta del perro que edificion de 300 plantas.</p>
+<p>Pues depende.  Si la actividad a resolver va tener que mantenerse en el tiempo sobre cambios la experiencia nos dice que si.</p>
 <p>Si la actividad en cuestión no va a ser modificada quizás una primera aproximación sin mucho diseño nos valga la pena, el problema es que no sabemos cual de las dos van a ser nuestras decisiones.</p>
 <p>Aplicacion para un rato que se tiran lustros en los servidores, y aplicacion con planes a largo plazo que van a la basura antes de desplegar.</p>
 <p>SobreIngenieria vs subingenieria o infraingenieria.</p>
 <p><strong>Is it worth the effort to design software well?</strong>
 Merece la pena diseñar correctamente el software?
 <a href="https://martinfowler.com/bliki/DesignStaminaHypothesis.html">https://martinfowler.com/bliki/DesignStaminaHypothesis.html</a></p>
-</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.eap.png" -->
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Principios
@@ -282,11 +361,11 @@ Merece la pena diseñar correctamente el software?
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-- Single Responsibility
-- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Open/Close
-- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Liskov Sustitution
-- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Interface Segregation
-- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Dependency Injection
+- **S**ingle Responsibility
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->**O**pen/Closed
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->**L**iskov Sustitution
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->**I**nterface Segregation
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->**D**ependency Inversion
 </div>
 
 <aside class="notes"><table>
@@ -323,7 +402,7 @@ Merece la pena diseñar correctamente el software?
 <td><a href="https://es.wikipedia.org/wiki/Principio_de_inversi%C3%B3n_de_la_dependencia" title="Principio de inversión de la dependencia">Principio de inversión de la dependencia</a> (<em>Dependency inversion principle</em>)<br><br>la noción de que se debe “depender de abstracciones, no depender de implementaciones”.<a href="https://es.wikipedia.org/wiki/SOLID#cite_note-martin-design-principles-4">4</a>​  <br>La <a href="https://es.wikipedia.org/wiki/Inyecci%C3%B3n_de_Dependencias" title="Inyección de Dependencias">Inyección de Dependencias</a> es uno de los métodos que siguen este principio.</td>
 </tr>
 </tbody></table>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.eap.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 - Single Responsibility
@@ -345,11 +424,11 @@ Fútbol
 <p>En el mundo real además afectan otras cosas, te gusta conocer a la eprsona para saber si está en un buen día, si es un sicopata pero aun asi...</p>
 <p>Para tirar un penalti en una final a quien eliges</p>
 <p><strong>Single Responsibility</strong>: Cualquier medico debe saber de todo pero queremos un especialista.
-<strong>Open/Close</strong>: Si tu defines las tareas de un perfil, cualquier que cumpla esas tareas puede añadirse al listado. 
+<strong>Open/Closed</strong>: Si tu defines las tareas de un perfil, cualquier que cumpla esas tareas puede añadirse al listado. 
 <strong>Liskov</strong>: Diferentes medicamente con mismo principio activo, distintos nombres pero hacen lo mismo
 <strong>Interface Segregation</strong>: Es preferible tener una interfaz por cada especialidad médica, que una interfaz genérica Médico que involucre. Gestion de historial, Investigación, Atención Primaria, Atención pediatrica, Cardiologia, Oncología
-<strong>Dependency Injection</strong>: Al dirigir un hospital lo ideal es que te pasen un listados de gente para cada puesto. Puedes hacer cuadrantes o lo que quieras, si una persona cambia tus direcciones siguen siendo las mismas al no depender de las personas concretas.</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<strong>Dependency Inversion</strong>: Al dirigir un hospital lo ideal es que te pasen un listados de gente para cada puesto. Puedes hacer cuadrantes o lo que quieras, si una persona cambia tus direcciones siguen siendo las mismas al no depender de las personas concretas.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Liskov Sustitution
@@ -372,7 +451,7 @@ Fútbol
 <p><a href="https://stg-tud.github.io/sedc/Lecture/ws13-14/3.3-LSP.html#mode=document">https://stg-tud.github.io/sedc/Lecture/ws13-14/3.3-LSP.html#mode=document</a>
 Rectangulo y Cuadrado
 Shape - &gt; Rectangle | Square</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Interface Segregation
@@ -383,22 +462,22 @@ Fútbol
 </div>
 
 <aside class="notes"><p>en vez de tener unas interfaces/clases genericas Medico/Jugador o tener interfaces concretas Cirujano/Cardiologo/Fisio/Pediatra, Portero/Defensa/Delantero</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Dependency Injection
+## Dependency Inversion
 
 Medicina
 
 Fútbol
 </div>
 
-<aside class="notes"><p>montar un hospital con los compañeros y formarlos en cada especialidad o saber qué necesitas y buscar gente que pueda trabajar esos perfiles</p>
+<aside class="notes"><p>montar un hospital con los compañeros porque esta menganito o fulanito y formarlos en cada especialidad o saber qué necesitas y buscar gente que pueda trabajar esos perfiles</p>
 <p>tener unas estrategias con unos perfiles concretos o hacer un equipo alrededor de los jugadores, si tienes a Messi, CR7, </p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-## Open / Close
+## Open / Closed
 
 Medicina
 
@@ -408,23 +487,23 @@ Fútbol
 <aside class="notes"><p>Tanto en un hospital como en un equipo tienes una serie de procedimiento o estrategias.</p>
 <p>Lo ideal es que tengas unas estrategias que te funcionen mientras haya alguien que pueda hacer el papel(interfaz)</p>
 <p>La estrategia no hace falta que la modifiques en función de quien te llegue, si acaso lo podrá hacer la estrategia es evolucionar en sí misma por nuevas funcionalidades.</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-# Test
+# Testing
 </div>
 
-<aside class="notes"><p>¿alguien de aqui que sepa que es el testing? ¿y que lo haga diariamente? todos hacemos testing, pero lo que no podemos hacer es realizar todas las pruebas que hacemos con cualquier feature reproducirlos cuando hacemos otra funcionalidad.</p>
+<aside class="notes"><p>todos hacemos testing, pero lo que no podemos hacer es realizar todas las pruebas que hacemos con cualquier feature reproducirlos cuando hacemos otra funcionalidad.</p>
 <p>Necesitamos que la máquina se encargue de verificar que el proyecto en conjunto o por piezas separadas haga lo que queremos que haga</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-# Test
+# Testing
 # <mark>Automatizado</mark>
 </div>
 
 <aside class="notes"><p>siguiendo los principios SOLID, destacando la Inyección de Dependencias esto se hace mucho más fácil.</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # BUGs
@@ -436,32 +515,43 @@ El número de veces que <mark>un humano</mark> debe reportar un bug concreto deb
 <aside class="notes"><p>Que un mismo error no se despliegue en producción una vez es conocido</p>
 <p>Delegar en el maquina de CI/CD y liberarnos de la carga mental de estar recordandolo</p>
 <p>Intentar transmitir la tranquilidad de que lo que has testeado funciona</p>
-<!-- .slide: data-background-image="../Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Objetivos
+
+
+- Construir APIs reales
+- &shy;<!-- .element: class="fragment" data-fragment-index="1" -->Pasar de código funcional → diseñar código mantenible
+- &shy;<!-- .element: class="fragment" data-fragment-index="2" -->Entender proyectos legacy
+- &shy;<!-- .element: class="fragment" data-fragment-index="3" -->Entender por qué los proyectos se degradan con el tiempo
+- &shy;<!-- .element: class="fragment" data-fragment-index="4" -->Testear con confianza
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Respeto
 
-<img src="../Adjuntos/meme_vamoacalmarno.jpeg" alt="" style="width: 400px; object-fit: fill">
+<img src="Adjuntos/meme_vamoacalmarno.jpeg" alt="" style="width: 400px; object-fit: fill">
 </div>
 
 <aside class="notes"><p>despues de la chapa un aviso de respeto ante anglicismos y marcas a partir de ahora</p>
-</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<img src="../Adjuntos/mauroentrialgo_.whitelabel_hd.jpg" alt="" style="object-fit: scale-down">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+<img src="Adjuntos/mauroentrialgo_.whitelabel_hd.jpg" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<img src="../Adjuntos/mauroentrialgo_whitelabel_1.png" alt="" style="object-fit: scale-down">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+<img src="Adjuntos/mauroentrialgo_whitelabel_1.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<img src="../Adjuntos/mauroentrialgo_whitelabel_2.png" alt="" style="object-fit: scale-down">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/transparent.png" -->
+<img src="Adjuntos/mauroentrialgo_whitelabel_2.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/transparent.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<img src="../Adjuntos/mauroentrialgo_whitelabel_3.png" alt="" style="object-fit: scale-down">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="../Adjuntos/slides.eap.png" -->
+<img src="Adjuntos/mauroentrialgo_whitelabel_3.png" alt="" style="object-fit: scale-down">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.png" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Referencias
