@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/solarized.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.portada.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Errores Típicos
+</div>
+
+<aside class="notes"><p>Bloque dinámico y cercano.  </p>
+<p>No es para señalar a nadie.<br>Todos hemos hecho estas cosas.  </p>
+<p>Objetivo:<br>ahorrarles años de golpes.  </p>
+<p>Pedid que levanten la mano si se reconocen en alguno.</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Error #1  
+  
+## Toda la lógica en el Controller  
+  
+```java  
+@PostMapping("/loans")  
+public Loan save(...) {  
+  
+	if(member == null) ...  
+	if(copy == null) ...  
+	if(copyReserved) ...  
+	if(memberBlocked) ...  
+	if(delay > 3) ...  
+  
+	...  
+}
+```
+</div>
+
+<aside class="notes"><p>El controller debe ser pegamento entre HTTP y negocio.</p>
+<p>Cuando crece:</p>
+<ul>
+<li>difícil leer</li>
+<li>difícil testear</li>
+<li>difícil reutilizar</li>
+</ul>
+<p>Idea:<br>Controller recibe petición y delega.</p>
+<p>Controller = Recepcionista<br>Service = especialista</p>
+<p>Si el metodo tiene  2 o mas indentaciones... sospechar</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Mejor enfoque
+
+## Controller limpio
+
+```java
+
+	@PostMapping("/loans")  
+	public Loan save(@RequestBody LoanCreate dto){  
+	    return createLoanService.execute(dto);  
+	}
+
+```
+</div>
+
+<aside class="notes"><p>Mucho más claro.</p>
+<p>Cuando hay bug sabes dónde mirar.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Error #2
+
+## Copiar y pegar código
+
+```java
+
+	if(type.equals("book")) ...  
+	if(type.equals("disc")) ...  
+	if(type.equals("game")) ...
+
+```
+... repetido en 4 sitios.
+</div>
+
+<aside class="notes"><p>Copiar parece rápido.</p>
+<p>Duplicar código duplica futuros problemas.</p>
+<p>Luego cambias una regla:</p>
+<ul>
+<li>arreglas 3 sitios</li>
+<li>olvidas 1</li>
+</ul>
+<p>Y nace el bug fantasma.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Mejor enfoque
+
+## Una única fuente de verdad
+
+```java
+	public boolean canLoan(Item item){  
+	    ...  
+	}
+```
+</div>
+
+<aside class="notes"><p>La regla vive en un sitio.</p>
+<p>Cambias una vez.</p>
+<p>volvemos a lo mismo, evitar aperturas de flujos de decisiones. Mas dificil de leer</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Error #3
+
+## Nombres malos
+
+```java
+
+	List<Item> l;  
+	String x;  
+	ServiceManagerProcess sp;
+	
+```
+</div>
+
+<aside class="notes"><p>Nombrar bien es programar.</p>
+<p>Un mal nombre obliga a leer 20 líneas más.</p>
+<p>Echamos mas tiempo en el mantenimiento que en el desarrollo</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Mejor enfoque
+
+```java
+
+	List<Item> overdueItems;  
+	String username;  
+	CreateLoanService service;
+
+```
+</div>
+
+<aside class="notes"><p>Si el nombre es bueno casi sobra comentar.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Error #4
+
+## Clases gigantes
+
+- MemberService.java (2400 líneas)
+- Utils.java
+- CommonHelper.java
+</div>
+
+<aside class="notes"><p>Cuando una clase hace demasiadas cosas:</p>
+<ul>
+<li>nadie la entiende completa</li>
+<li>tocar da miedo</li>
+<li>todo depende de ella</li>
+</ul>
+<p>Muy común en proyectos viejos.</p>
+<p>Si da pereza abrir el archivo, algo pasa.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Mejor enfoque
+
+## Separar por casos de uso
+
+- CreateLoanService
+- ReturnLoanService
+- ListItemsService
+- RegisterMemberService
+</div>
+
+<aside class="notes"><p>Una clase = una intención clara.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Error #5
+
+## Romper la API sin querer
+
+Antes:
+
+{ "title": "Libro" }
+
+Después:
+
+{ "name": "Libro" }
+</div>
+
+<aside class="notes"><p>Tu frontend o aplicación externa deja de funcionar.</p>
+<p>Backend no vive solo.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Idea clave
+
+## La API es un contrato
+</div>
+
+<aside class="notes"><p>Si alguien consume tu API:</p>
+<p>Cambiar nombres o formatos<br>sin avisar<br>rompe clientes.</p>
+<p>Por eso existen versiones, DTOs, compatibilidad.</p>
+<p>Profundizaremos mas en el medio en este aspecto</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Error #6
+
+## No validar entrada
+
+```json
+
+	{  
+	  "username": "",  
+	  "email": "hola",  
+	  "age": -7  
+	}
+	
+```
+</div>
+
+<aside class="notes"><p>Si no validas entra basura.</p>
+<p>Basura dentro = problemas después.</p>
+<p>Ni siquiera estamos hablando de validaciones a nivel de dominio, sino de rango de datos</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Error #7
+
+## Programar siempre con prisa
+</div>
+
+<aside class="notes"><p>“Ya lo arreglaremos luego”</p>
+<p>Luego nunca llega.</p>
+<p>La deuda técnica crece silenciosamente.</p>
+<p><strong>La prisa puntual se entiende.</strong><br><strong>La prisa permanente destruye proyectos.</strong></p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Error #8
+
+## No borrar código muerto
+
+oldSaveMethod2()  
+legacyLoanProcess()  
+tempPatchFinal_v3()
+</div>
+
+<aside class="notes"><p>Muchas veces gente contentan simplemente porque han conseguido compilar el proyecto
+Código que nadie entiende también compila.</p>
+<p>Código muerto confunde.</p>
+<p>Si no sirve:<br>fuera.</p>
+<p>Git guarda historia.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Pregunta al grupo
+
+## ¿Cuál habéis visto más?
+
+- Controllers gigantes
+- Copiar/pegar
+- Nombres raros
+- Clases monstruo
+- Código muerto
+</div>
+
+<aside class="notes"><!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Mi consejo
+
+## No busquéis perfección
+
+Buscad mejorar continuamente.
+</div>
+
+<aside class="notes"><p>Todos escribimos código mejorable.</p>
+<p>Lo importante:</p>
+<ul>
+<li>detectar olores (seguid instinto)</li>
+<li>mejorar poco a poco</li>
+<li>no repetir errores</li>
+</ul>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Preguntas abiertas
+
+## Proyecto real / dudas / carrera / backend
+</div>
+
+<aside class="notes"><p>Deja 15-20 minutos finales.</p>
+<p>Preguntas típicas:</p>
+<ul>
+<li>cómo seguir aprendiendo</li>
+<li>Java merece la pena</li>
+<li>Spring en Junta</li>
+<li>IA ayuda o no</li>
+<li>cómo entrar a proyecto legacy</li>
+</ul>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## El código funciona hoy.
+
+~
+## El diseño protege mañana.
+</div>
+
+<aside class="notes"><!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
