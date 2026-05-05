@@ -224,6 +224,8 @@ DELETE id - Eliminar</p>
 @Entity(name = "members")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member {
     
     @Id
@@ -321,6 +323,8 @@ Jugar metiendo nuevos datos, listando y viendo detalle
 @Entity(name = "items")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Item {
     
     public static final String LIBRO = "libro";
