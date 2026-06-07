@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/beige.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Adjuntos/slides.eap.portada.png" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# El proyecto funciona…
+## …hasta que llega producción
+</div>
+
+<aside class="notes"><p>Bloque muy realista. Todos hemos vivido esto.</p>
+<p>En local: &quot;todo perfecto&quot;.
+En producción: 🔥🔥🔥</p>
+<p>Objetivo: ver problemas típicos que aparecen fuera de nuestro entorno de desarrollo — y conectar cada uno con cosas que ya hemos visto esta semana (properties, logging, despliegue...).</p>
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# En local funciona
+
+```text
+✅ localhost
+✅ mi base de datos
+✅ mi usuario
+✅ mis datos
+✅ mi máquina
+```
+</div>
+
+<aside class="notes"><p>Nuestro entorno está “domesticado”.</p>
+<p>Todo está preparado para nosotros.</p>
+<p>Producción no perdona.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Primera realidad
+
+## Tu entorno NO es producción
+</div>
+
+<aside class="notes"><p>En producción cambian:</p>
+<ul>
+<li>usuarios</li>
+<li>datos</li>
+<li>permisos</li>
+<li>concurrencia</li>
+<li>carga</li>
+<li>servidores</li>
+<li>configuración</li>
+<li>horarios</li>
+<li>red</li>
+</ul>
+<p>Y empiezan los problemas reales.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #1
+
+## Variables hardcodeadas
+
+```java
+String path = "C:/raul/files";
+String password = "admin123";
+```
+</div>
+
+<aside class="notes"><p>Funciona en tu portátil.</p>
+<p>En servidor:<br>💥</p>
+<p>Muy típico:</p>
+<ul>
+<li>rutas</li>
+<li>tokens</li>
+<li>URLs</li>
+<li>passwords</li>
+</ul>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Mejor enfoque
+
+## Configuración externa
+
+```properties
+app.files-path=/opt/app/files
+```
+
+```java
+@Value("${app.files-path}")
+private String path;
+```
+</div>
+
+<aside class="notes"><p>Separar código y configuración: el código no cambia entre entornos, solo el archivo de propiedades.</p>
+<p>Callback directo a la sesión de <strong>Properties</strong>: esto es justo lo que vimos con <code>application-dev.properties</code> / <code>application-prod.properties</code> y <code>spring.profiles.active</code>. No es teoría — es la razón por la que insistí tanto en eso.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #2
+
+## “Pero en mi local iba”
+</div>
+
+<aside class="notes"><p>Clásico absoluto.</p>
+<p>Tu local:</p>
+<ul>
+<li>tiene datos concretos</li>
+<li>tiene permisos admin</li>
+<li>tiene cachés</li>
+<li>tiene cosas instaladas</li>
+</ul>
+<p>Producción no.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Ejemplo
+
+```java
+List<Socio> socios = repo.findAll();
+Socio primero = socios.get(0);
+```
+</div>
+
+<aside class="notes"><p>En tu base de datos local siempre hay al menos un socio (el que metiste a mano hace semanas).</p>
+<p>En producción, el día que esa tabla está vacía o ese registro se borró... <code>IndexOutOfBoundsException</code>.</p>
+<p>Tu local &quot;miente&quot; porque arrastra estado que tú mismo creaste. Producción empieza limpia, o con datos que tú no controlas.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #3
+
+## Datos reales
+
+```json
+{ "name": null }
+{ "email": "   " }
+{ "birthdate": "1900-01-01" }
+```
+</div>
+
+<aside class="notes"><p>Los usuarios reales hacen cosas creativas: copian y pegan con espacios, dejan campos vacíos, ponen fechas imposibles porque el formulario no validaba.</p>
+<p>Producción descubre casos que nadie imaginó — y nadie probó, porque &quot;¿quién va a meter eso?&quot;. Pues alguien lo mete, siempre.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #4
+
+## Logs insuficientes
+
+```java
+System.out.println("Error");
+```
+</div>
+
+<aside class="notes"><p>Cuando algo falla en producción:</p>
+<ul>
+<li>no puedes depurar</li>
+<li>no puedes abrir IDE</li>
+<li>no puedes preguntar al servidor</li>
+</ul>
+<p>El log es tus ojos. Y &quot;Error&quot; a secas no te dice ni qué pasó, ni cuándo, ni con qué datos — es como mirar por una mirilla tapada.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Mejor enfoque
+
+```java
+log.error("Error creando préstamo {}", loanId, ex);
+```
+</div>
+
+<aside class="notes"><p>Información útil:</p>
+<ul>
+<li>qué pasó (mensaje claro)</li>
+<li>con qué datos (<code>loanId</code>)</li>
+<li>la excepción completa (<code>ex</code>, con su stacktrace)</li>
+<li>y el nivel correcto (<code>error</code>, no <code>info</code> ni <code>println</code>)</li>
+</ul>
+<p>Callback directo a la sesión de <strong>Logging</strong>: esto es <code>@Slf4j</code> + niveles + <code>logback.xml</code> puestos en contexto real. La diferencia entre un incidente que resuelves en 5 minutos y uno que te tiene 3 horas a oscuras está, muchas veces, en una sola línea de log bien escrita como esta.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #5
+
+## Fechas y zonas horarias
+</div>
+
+<aside class="notes"><p>El enemigo silencioso.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+```java
+// "Funciona en mi máquina"
+LocalDateTime vencimiento = LocalDateTime.now().plusDays(1);
+if (LocalDateTime.now().isAfter(vencimiento)) {
+    marcarComoCaducado(prestamo);
+}
+```
+
+```text
+Tu portátil:    Europa/Madrid (UTC+1)
+Servidor prod:  UTC
+
+Un préstamo "vence a las 00:00 del día 15"...
+  → para ti son las 01:00 (15) en local
+  → para el servidor son las 23:00 (14) en UTC
+
+Resultado: el préstamo se marca caducado UNA HORA ANTES de lo previsto.
+Y nadie lo nota... hasta que alguien reclama.
+```
+</div>
+
+<aside class="notes"><p>¿Hora local? ¿UTC? ¿Servidor? ¿Cliente?</p>
+<p>El bug no está en la lógica — <code>isAfter</code> es correcto. Está en que <code>LocalDateTime.now()</code> no lleva zona horaria pegada: cada máquina la interpreta con la suya. En tu portátil y en el servidor, &quot;ahora&quot; significa cosas distintas.</p>
+<p>La solución casi siempre es la misma: trabajar internamente en <code>Instant</code> / <code>ZonedDateTime</code> con UTC explícito, y convertir a hora local solo en la capa de presentación — nunca al revés.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Caso típico
+
+## Funciona… excepto de madrugada
+</div>
+
+<aside class="notes"><p>Jobs nocturnos. Cambio horario (verano/invierno). Procesos que cruzan la medianoche.</p>
+<p>Es uno de los bugs más difíciles de reproducir en local: para verlo necesitas que sea una hora concreta, en una fecha concreta del año (la del cambio de horario), en una zona horaria concreta. La probabilidad de que coincida todo eso mientras estás depurando con el IDE abierto es casi cero — por eso &quot;nunca&quot; se reproduce... hasta que un usuario lo sufre en directo.</p>
+<p>Muy típico en administración (cierres de mes, procesos batch a medianoche, informes &quot;del día anterior&quot;).</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #6
+
+## Concurrencia
+</div>
+
+<aside class="notes"><p>En local hay 1 usuario.</p>
+<p>En producción:<br>500 personas a la vez.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Ejemplo
+
+```text
+Usuario A → reserva copia
+Usuario B → reserva copia (al mismo tiempo)
+
+Resultado: misma copia reservada dos veces
+```
+</div>
+
+<aside class="notes"><p>Problemas reales aparecen con usuarios simultáneos: dos peticiones llegan a la vez, leen el mismo estado (&quot;disponible&quot;) y las dos lo modifican antes de que la otra termine.</p>
+<p>En local nunca lo veis porque sois una sola persona haciendo una petición detrás de otra.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #7
+
+## “Ya lo arreglaremos”
+</div>
+
+<aside class="notes"><p>Pequeños parches rápidos:</p>
+<ul>
+<li>if extra</li>
+<li>método temporal</li>
+<li>hotfix urgente</li>
+</ul>
+<p>Meses después:<br>nadie entiende nada.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Ejemplo
+
+```java
+// TODO: refactorizar esto cuando haya tiempo (2023-04-12)
+if (cliente.getId() == 4821) {
+    // caso especial pedido por Contabilidad, no tocar
+    return calcularDescuentoEspecial();
+}
+```
+</div>
+
+<aside class="notes"><p>Cada parche de estos, solo, parece inofensivo. &quot;Es solo un caso especial, lo arreglo luego.&quot;</p>
+<p>El problema no es el primero. Es el #50, cuando nadie recuerda por qué existe el cliente 4821, nadie se atreve a borrarlo, y el método ya tiene 400 líneas de &quot;casos especiales&quot;.</p>
+<p>Esto es exactamente lo que veremos en el libro de Feathers sobre legacy code: el código no nace legado, se va convirtiendo poco a poco.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #8
+
+## No monitorizar
+
+```java
+} catch (Exception ex) {
+    // no hace nada
+}
+```
+</div>
+
+<aside class="notes"><p>Si nadie mira:</p>
+<ul>
+<li>logs</li>
+<li>errores</li>
+<li>consumo</li>
+<li>rendimiento</li>
+</ul>
+<p>Este <code>catch</code> vacío lleva semanas tragándose un error cada noche. Nadie lo sabe, porque nadie ha mirado.</p>
+<p>El problema lo detecta el usuario. Y eso llega tarde — y encima llega como una queja, no como una alerta que pudiste anticipar.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #9
+
+## Configuración distinta
+
+Local (`application-dev.properties`):
+
+```properties
+debug=true
+spring.profiles.active=dev
+spring.jpa.show-sql=true
+logging.level.com.miempresa=DEBUG
+```
+
+Producción (alguien copia el de dev "para no perder tiempo"):
+
+```properties
+debug=true
+spring.profiles.active=dev
+spring.jpa.show-sql=true
+logging.level.com.miempresa=DEBUG
+```
+
+```text
+Resultado, una semana después:
+  · El log de producción pesa 40 GB y tira el disco del servidor
+  · Cada SQL se imprime entero, con datos de clientes incluidos
+  · Las páginas de error muestran trazas completas (stacktrace) a cualquier usuario
+  · El equipo de seguridad pregunta, muy serio, "¿quién ha activado debug en prod?"
+```
+</div>
+
+<aside class="notes"><p>Cambian: perfiles, properties, conexiones (BD, URLs externas), CORS, puertos...</p>
+<p>Pero el ejemplo real es más sutil que &quot;cambiar dos líneas&quot;: es lo que pasa cuando <strong>no</strong> las cambias. <code>debug=true</code> en local es comodísimo — ves cada SQL, cada traza, cada detalle. Ese mismo <code>debug=true</code> en producción es una fuga de información (datos de clientes en los logs) y un problema de rendimiento (el disco se llena en días).</p>
+<p>Otra vez la sesión de <strong>Properties</strong>: <code>application-dev.properties</code> vs <code>application-prod.properties</code>, y <code>spring.profiles.active</code>. Si esa separación está bien hecha desde el principio, cambiar de entorno es solo cambiar una variable — no copiar y &quot;ajustar a mano&quot; un archivo entero el día del despliegue, que es exactamente cuando se cometen estos errores.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Problema #10
+
+## “Pequeño cambio”
+</div>
+
+<aside class="notes"><p>Cambias una línea.</p>
+<p>Rompes:</p>
+<ul>
+<li>frontend</li>
+<li>integración</li>
+<li>batch nocturno</li>
+<li>informes</li>
+<li>API externa</li>
+</ul>
+<p>Producción enseña dependencias ocultas.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Ejemplo
+
+```json
+// Antes
+{ "estado": "ACTIVO" }
+
+// Después de "limpiar" el código
+{ "status": "ACTIVE" }
+```
+</div>
+
+<aside class="notes"><p>Renombrar un campo del DTO te parece un detalle de limpieza. Para ti es solo texto.</p>
+<p>Para el frontend que lee <code>estado</code>, para el batch nocturno que filtra por <code>&quot;ACTIVO&quot;</code> y para la integración externa que espera ese contrato... es una ruptura total. Y nadie te avisó de que existían, porque no estaban en tu cabeza cuando hiciste el cambio.</p>
+<p>Esto es justo por lo que un contrato de API claro (lo que vimos con <strong>OpenAPI</strong>) y los tests de integración importan tanto: hacen visibles esas dependencias antes de que las descubra producción.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Idea importante
+
+## Producción amplifica defectos
+</div>
+
+<aside class="notes"><p>Pequeños errores:<br>→ grandes incidencias</p>
+<p>Porque:</p>
+<ul>
+<li>hay usuarios</li>
+<li>datos reales</li>
+<li>concurrencia</li>
+<li>presión</li>
+</ul>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# ¿Cómo sobrevivimos?
+
+- logs
+- tests
+- DTOs
+- validaciones
+- configuración limpia
+- despliegues controlados
+- observabilidad
+- refactor continuo
+</div>
+
+<aside class="notes"><p>No existe proyecto perfecto.</p>
+<p>Existe proyecto mantenible.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Consejo real
+
+## Diseñar para el cambio
+</div>
+
+<aside class="notes"><p>Los proyectos no mueren por el primer desarrollo.</p>
+<p>Mueren por los siguientes 200 cambios.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Pregunta al grupo
+
+## ¿Qué fallo os ha explotado más fuerte?
+
+- configuración
+- fechas
+- datos reales
+- concurrencia
+- despliegues
+- logs
+</div>
+
+<aside class="notes"><p>Aquí suelen salir historias muy buenas.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Hay algo que nos dijo Rob Pike
+
+## Las 5 reglas de la programación
+
+> Escritas hace décadas. Siguen siendo ignoradas cada día.
+</div>
+
+<aside class="notes"><p>Transición natural: hemos visto los problemas del día a día. Ahora vamos a ver sabiduría destilada de décadas de ingeniería real. Rob Pike: creador de Go, ex-Bell Labs, trabajó con Ken Thompson. No son reglas académicas. Las escribió gente que había sufrido lo contrario.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Regla #1
+
+## No sabes dónde va a estar el cuello de botella
+
+```text
+❌ "Seguro que el problema está en la consulta SQL"
+❌ "Esto va lento, voy a optimizar el bucle"
+❌ "Mejor uso un algoritmo más sofisticado aquí"
+
+✅ Primero: medir. Luego: actuar.
+```
+
+> Los cuellos de botella aparecen donde menos te lo esperas.
+</div>
+
+<aside class="notes"><p>Cuántas horas perdidas optimizando lo que no era el problema. El instinto engaña. Los datos no. No toques nada hasta saber dónde está realmente el problema.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Regla #2
+
+## Mide. Luego optimiza. En ese orden.
+
+```java
+// ❌ Optimización prematura
+private final Map<String, Result> cache = new HashMap<>(); // "por si acaso va lento"
+
+// ✅ Primero funcionando, luego con datos reales
+Result calculate(String input) {
+    return heavyOperation(input); // ← mide esto primero
+}
+```
+
+> "Premature optimization is the root of all evil." — Tony Hoare
+</div>
+
+<aside class="notes"><p>Pike y Hoare se alinean aquí perfectamente. Optimizar sin medir es adivinar. Y adivinar en producción es arriesgado. Herramientas: profilers, APM, logs de tiempo, métricas de base de datos. El código claro que va &quot;un poco lento&quot; casi siempre es suficiente.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Regla #3
+
+## Los algoritmos fancy son lentos cuando n es pequeño
+
+```text
+Tu dataset: 200 registros
+Tu solución: árbol B+ autobalanceado con índice invertido
+
+Resultado real:
+  → 3ms con ArrayList y un for
+  → 3ms con tu obra maestra de ingeniería
+  → pero 3 semanas de desarrollo extra
+```
+
+> Y n... casi siempre es pequeño.
+</div>
+
+<aside class="notes"><p>Ken Thompson lo resumió: &quot;When in doubt, use brute force.&quot; El 90% de los sistemas empresariales manejan volúmenes modestos. El algoritmo O(n²) sobre 500 registros va perfectamente. Guarda la complejidad para cuando los datos la justifiquen, con métricas.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Regla #4
+
+## Los algoritmos fancy también tienen más bugs
+
+```java
+// ❌ "Optimizado"
+int partition(int[] arr, int low, int high) {
+    int pivot = arr[high]; int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) { i++; int t = arr[i];
+            arr[i] = arr[j]; arr[j] = t; } }
+    int t = arr[i+1]; arr[i+1] = arr[high]; arr[high] = t;
+    return i + 1; // ← ¿seguro?
+}
+
+// ✅ Simple, legible, correcto
+Collections.sort(list);
+```
+</div>
+
+<aside class="notes"><p>KISS: Keep It Simple, Stupid. Cuanto más complejo el algoritmo, más superficie de error. Y más difícil de mantener para quien venga después (o para ti en 6 meses). La elegancia real es el código que no necesita explicación.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Regla #5
+
+## Los datos mandan
+
+```text
+❌ Diseño habitual:
+   "¿Qué métodos necesito?" → luego adapto los datos
+
+✅ Diseño correcto:
+   "¿Cuáles son mis datos y cómo se relacionan?" → los algoritmos aparecen solos
+```
+
+```java
+// Si tu estructura de datos es correcta...
+List<Loan> activeLoans = user.getActiveLoans(); // ...esto es trivial
+```
+
+> "Write stupid code that uses smart objects."
+</div>
+
+<aside class="notes"><p>Fred Brooks ya lo dijo en The Mythical Man-Month. Si el modelo de datos es bueno, la lógica de negocio se escribe sola. Si estás peleando con la lógica, probablemente el problema está en el modelo. Invertir tiempo en diseñar bien las entidades ahorra semanas de algoritmos complicados.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Las 5 reglas, en resumen
+
+|Regla|Idea central|
+|---|---|
+|#1 No adivines|Los cuellos de botella sorprenden|
+|#2 Mide primero|Sin datos, no hay decisión|
+|#3 n es pequeño|La simplicidad suele ganar|
+|#4 Simple = menos bugs|Fancy es caro de mantener|
+|#5 Los datos mandan|Buen modelo → algoritmos obvios|
+</div>
+
+<aside class="notes"><p>Estas reglas no son para memorizar. Son para tener presentes cuando la presión aprieta. Cuando alguien proponga una solución compleja, pregunta: ¿hemos medido? ¿cuánto es n? La mayoría de los problemas de producción que hemos visto antes se evitan aplicando estas reglas.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# La conexión con producción
+
+```text
+Regla #1 + #2  →  No optimices logs, mide primero dónde falla
+Regla #3 + #4  →  No sobreingenieres: el hotfix simple es mejor que el fancy con bugs
+Regla #5       →  Un buen modelo de datos evita el 80% de los problemas de concurrencia
+```
+</div>
+
+<aside class="notes"><p>Cerrar el círculo: las reglas de Pike no son teoría abstracta. Son exactamente la respuesta a los 10 problemas que hemos visto. El código más mantenible en producción casi siempre es el más simple.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Cierre
+
+## El objetivo no es que funcione en tu portátil.
+
+## El objetivo es dormir tranquilo después del despliegue.
+</div>
+
+<aside class="notes"><p>Gran frase final para enlazar con:</p>
+<ul>
+<li>testing</li>
+<li>CI/CD</li>
+<li>observabilidad</li>
+<li>despliegue</li>
+<li>curso avanzado</li>
+</ul>
+<p>Y enlaza directamente con lo que viene ahora: las recomendaciones de libros. &quot;Working Effectively with Legacy Code&quot; es literalmente el manual de instrucciones para &quot;diseñar para el cambio&quot; y sobrevivir a esos 200 cambios — la frase de cierre de hoy es la premisa del libro de mañana.</p>
+<!-- .slide: data-background-image="Adjuntos/slides.eap.png" --></aside></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
